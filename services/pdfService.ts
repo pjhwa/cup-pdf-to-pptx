@@ -1,5 +1,6 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import { TextItem } from '../types';
+import { PDF_RENDER_SCALE, JPEG_QUALITY } from '../constants';
 
 // Fix for "Failed to fetch dynamically imported module" error:
 // PDF.js v5+ in an ESM environment requires the worker to be loaded as a module (.mjs).
@@ -25,7 +26,7 @@ export const processPdfDocument = async (file: File): Promise<ProcessedPage[]> =
       const page = await pdf.getPage(i);
 
       // Set scale to ensure good quality for AI analysis (approx 1.5x - 2x standard screen)
-      const scale = 2.0;
+      const scale = PDF_RENDER_SCALE;
       const viewport = page.getViewport({ scale });
 
       // 1. Render Image
@@ -45,7 +46,7 @@ export const processPdfDocument = async (file: File): Promise<ProcessedPage[]> =
       await page.render(renderContext).promise;
 
       // Export to JPEG to save size while maintaining quality for AI
-      const base64 = canvas.toDataURL('image/jpeg', 0.8);
+      const base64 = canvas.toDataURL('image/jpeg', JPEG_QUALITY);
       const image = base64.split(',')[1];
 
       // 2. Extract Text
@@ -80,12 +81,13 @@ export const processPdfDocument = async (file: File): Promise<ProcessedPage[]> =
         const normalizedX = (viewportPoint[0] / viewport.width) * 100;
         // viewportPoint[1] is the *baseline* y. To get top-left, we subtract font height.
         // item.height might be 0, so we use transform[0] or [3] which acts as font size scale often.
-        const fontSize = Math.sqrt(tx[0] * tx[0] + tx[1] * tx[1]); // decomposed scale
-        const scaledFontSize = fontSize * scale;
+        const fontSize = Math.sqrt(tx[0] * tx[0] + tx[1] * tx[1]); // decomposed scale (already in viewport units)
+        // FIX: fontSize is already scaled, don't multiply by scale again
 
-        const normalizedY = ((viewportPoint[1] - scaledFontSize) / viewport.height) * 100;
-        const normalizedW = ((item.width * scale) / viewport.width) * 100;
-        const normalizedH = (scaledFontSize / viewport.height) * 100;
+        const normalizedY = ((viewportPoint[1] - fontSize) / viewport.height) * 100;
+        // FIX: item.width is in PDF units, convert properly to viewport percentage
+        const normalizedW = ((item.width) / (viewport.width / scale)) * 100;
+        const normalizedH = (fontSize / viewport.height) * 100;
 
         return {
           text: item.str,

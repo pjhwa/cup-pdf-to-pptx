@@ -1,5 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { SlideData, ElementType, TextItem } from "../types";
+import { GEMINI_MODEL, GEMINI_TEMPERATURE } from "../constants";
 
 const SYSTEM_INSTRUCTION = `
 You are an expert presentation layout parser. Your goal is to analyze an image of a presentation slide and extract a structured JSON representation to reconstruct it as an editable PowerPoint file.
@@ -83,7 +84,7 @@ export const analyzeSlideWithGemini = async (
     })), null, 0);
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash', // Switched to Flash for speed/cost effectiveness with text-context
+      model: GEMINI_MODEL, // Switched to Flash for speed/cost effectiveness with text-context
       contents: {
         parts: [
           {
@@ -101,7 +102,7 @@ export const analyzeSlideWithGemini = async (
         responseMimeType: "application/json",
         responseSchema: responseSchema,
         systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 0.0
+        temperature: GEMINI_TEMPERATURE
       }
     });
 
@@ -133,7 +134,8 @@ export const analyzeSlideWithGemini = async (
           w: 100,
           h: 100
         }
-      ]
+      ],
+      textItems: textItems // FIX: Add textItems for type consistency
     };
   }
 };
