@@ -34,9 +34,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, disabled }) => {
     <div
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
-      className={`relative border-2 border-dashed rounded-xl p-10 text-center transition-all duration-200 
-        ${disabled ? 'opacity-50 cursor-not-allowed border-slate-300 bg-slate-50' : 'border-indigo-300 bg-indigo-50/50 hover:bg-indigo-50 hover:border-indigo-500 cursor-pointer'}
-      `}
+      className={`dropzone ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
     >
       <input
         type="file"
@@ -45,15 +43,15 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileSelect, disabled }) => {
         onChange={handleChange}
         disabled={disabled}
       />
-      <div className="flex flex-col items-center justify-center space-y-4">
-        <div className={`p-4 rounded-full ${disabled ? 'bg-slate-200' : 'bg-indigo-100'}`}>
-          <UploadCloud className={`w-8 h-8 ${disabled ? 'text-slate-400' : 'text-indigo-600'}`} />
+      <div className="flex flex-col items-center justify-center space-y-6">
+        <div className={`float-animation p-6 rounded-3xl ${disabled ? 'bg-gray-700' : 'bg-gradient-to-br from-blue-500 to-purple-600 shadow-2xl'}`}>
+          <UploadCloud className={`w-12 h-12 ${disabled ? 'text-gray-500' : 'text-white'}`} />
         </div>
         <div>
-          <p className="text-lg font-semibold text-slate-700">
+          <p className="text-xl font-bold text-gray-100 mb-2">
             Click to upload or drag & drop
           </p>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-gray-400">
             PDF files only (max 20MB)
           </p>
         </div>

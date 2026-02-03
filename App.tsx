@@ -112,22 +112,23 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6 md:p-12 font-sans">
+    <div className="min-h-screen p-6 md:p-12 font-sans">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex justify-center mb-4">
-            <div className="bg-indigo-600 p-3 rounded-2xl shadow-lg shadow-indigo-200">
-              <Wand2 className="w-8 h-8 text-white" />
+        <div className="text-center mb-16 animate-fade-in">
+          <div className="flex justify-center mb-6 float-animation">
+            <div className="pulse-icon bg-gradient-to-br from-purple-500 to-indigo-600 p-4 rounded-3xl shadow-2xl">
+              <Wand2 className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-            PDF to Editable PowerPoint
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            <span className="gradient-text">PDF to Editable PowerPoint</span>
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
             Convert your PDF slides back into editable PPTX format.
-            AI separates text and shapes so you can edit the design, not just the background.
+            <br />
+            <span className="text-purple-400">AI-powered separation</span> of text and shapes.
           </p>
         </div>
 
@@ -140,19 +141,19 @@ function App() {
               <Dropzone onFileSelect={handleFileSelect} />
 
               {state.file && (
-                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="bg-red-50 p-2 rounded-lg">
-                      <FileText className="w-6 h-6 text-red-500" />
+                <div className="glass-card p-6 flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-gradient-to-br from-red-500 to-pink-600 p-3 rounded-2xl">
+                      <FileText className="w-7 h-7 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">{state.file.name}</p>
-                      <p className="text-sm text-slate-500">{(state.file.size / 1024 / 1024).toFixed(2)} MB</p>
+                      <p className="font-semibold text-gray-100">{state.file.name}</p>
+                      <p className="text-sm text-gray-400">{(state.file.size / 1024 / 1024).toFixed(2)} MB</p>
                     </div>
                   </div>
                   <button
                     onClick={startConversion}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center shadow-md hover:shadow-lg"
+                    className="gradient-btn"
                   >
                     Convert to PPTX
                   </button>
@@ -199,20 +200,22 @@ function App() {
 
           {/* Success Section */}
           {state.currentStep === 'done' && (
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center animate-fade-in max-w-2xl mx-auto">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Download className="w-8 h-8 text-green-600" />
+            <div className="glass-card p-10 text-center animate-fade-in max-w-2xl mx-auto">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6 pulse-icon">
+                <Download className="w-10 h-10 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">Conversion Complete!</h2>
-              <p className="text-slate-600 mb-8">
-                Your file "Converted_Presentation.pptx" has been downloaded.
+              <h2 className="text-3xl font-bold mb-2">
+                <span className="gradient-text">Conversion Complete!</span>
+              </h2>
+              <p className="text-gray-300 mb-8">
+                Your file <span className="text-purple-400">"Converted_Presentation.pptx"</span> has been downloaded.
               </p>
 
               <button
                 onClick={reset}
-                className="inline-flex items-center justify-center space-x-2 text-slate-600 hover:text-indigo-600 font-medium transition-colors"
+                className="inline-flex items-center justify-center space-x-2 text-gray-300 hover:text-purple-400 font-semibold transition-all hover:scale-105"
               >
-                <RefreshCw className="w-4 h-4" />
+                <RefreshCw className="w-5 h-5" />
                 <span>Convert another file</span>
               </button>
             </div>
@@ -220,15 +223,15 @@ function App() {
 
           {/* Error Section */}
           {state.error && (
-            <div className="bg-red-50 rounded-xl border border-red-100 p-6 text-center animate-fade-in max-w-2xl mx-auto">
-              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <AlertCircle className="w-6 h-6 text-red-600" />
+            <div className="glass-card p-8 text-center animate-fade-in max-w-2xl mx-auto border-2 border-red-500/30">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <AlertCircle className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-red-900 mb-2">Conversion Failed</h3>
-              <p className="text-red-700 mb-6">{state.error}</p>
+              <h3 className="text-2xl font-bold text-red-400 mb-3">Conversion Failed</h3>
+              <p className="text-gray-300 mb-8">{state.error}</p>
               <button
                 onClick={reset}
-                className="bg-white border border-red-200 text-red-700 hover:bg-red-50 px-6 py-2 rounded-lg font-medium transition-colors"
+                className="gradient-btn"
               >
                 Try Again
               </button>
@@ -238,8 +241,13 @@ function App() {
         </div>
 
         {/* Footer info */}
-        <div className="mt-12 text-center text-sm text-slate-400">
-          <p>Powered by Gemini 2.0 & PPTXGenJS</p>
+        <div className="mt-16 text-center text-sm text-gray-500">
+          <p className="flex items-center justify-center gap-2">
+            <span>Powered by</span>
+            <span className="text-purple-400 font-semibold">Gemini 2.0</span>
+            <span>&</span>
+            <span className="text-blue-400 font-semibold">PPTXGenJS</span>
+          </p>
         </div>
       </div>
     </div>
