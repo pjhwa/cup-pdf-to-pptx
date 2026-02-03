@@ -1,11 +1,11 @@
-# 📑 AI-Powered PDF to PPTX Converter
+# 🔨 SlideForge
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![React](https://img.shields.io/badge/React-19-61dafb.svg)
 ![Gemini](https://img.shields.io/badge/AI-Gemini_2.0_Flash-8e44ad.svg)
 
-A modern, AI-driven tool that converts PDF presentations into **fully editable PowerPoint (PPTX)** files. Unlike traditional converters that simply paste images onto slides, this tool uses a **Hybrid Parsing Architecture** to separate text, shapes, and images into distinct, editable layers.
+**SlideForge** is a modern, AI-driven tool that converts PDF presentations into **fully editable PowerPoint (PPTX)** files. Unlike traditional converters that simply paste images onto slides, SlideForge uses a **Hybrid Parsing Architecture** to separate text, shapes, and images into distinct, editable layers.
 
 ## ✨ Key Features
 
@@ -26,8 +26,8 @@ A modern, AI-driven tool that converts PDF presentations into **fully editable P
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/pjhwa/cup-pdf-to-pptx.git
-   cd cup-pdf-to-pptx
+   git clone https://github.com/pjhwa/slideforge.git
+   cd slideforge
    ```
 
 2. **Install dependencies**
@@ -45,7 +45,7 @@ A modern, AI-driven tool that converts PDF presentations into **fully editable P
    ```bash
    npm run dev
    ```
-   Open `http://localhost:5173` in your browser.
+   Open `http://localhost:3000` in your browser.
 
 ## 🏗️ Architecture
 
@@ -69,14 +69,22 @@ This project uses a **Hybrid Parsing Approach**:
 ## 📂 Project Structure
 
 ```
-├── components/        # React UI Components (Dropzone, Preview, etc.)
-├── services/          # Core Logic
-│   ├── pdfService.ts    # PDF text/image extraction
-│   ├── geminiService.ts # AI Layout Analysis
-│   └── pptxService.ts   # PPTX Synthesis
-├── docs/              # Detailed Documentation
-├── App.tsx            # Main Application Controller
-└── constants.ts       # Configuration Constants
+slideforge/
+├── src/
+│   ├── components/       # React UI Components
+│   ├── services/         # Core Logic
+│   │   ├── pdfService.ts
+│   │   ├── geminiService.ts
+│   │   └── pptxService.ts
+│   ├── types/            # TypeScript Definitions
+│   ├── config/           # Configuration Constants
+│   ├── styles/           # Global Styles
+│   ├── App.tsx           # Main Application
+│   └── main.tsx          # Entry Point
+├── docs/                 # Documentation
+│   ├── ARCHITECTURE.md
+│   └── TECHNIQUES.md
+└── package.json
 ```
 
 ## 📜 License
